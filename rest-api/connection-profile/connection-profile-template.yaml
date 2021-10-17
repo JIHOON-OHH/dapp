@@ -1,0 +1,52 @@
+name: "trace"
+x-type: "hlfv1"
+description: "Shipping Trace"
+version: "1.0"
+
+channels:
+  testchannel:
+    orderers:
+      - orderer.com
+    peers:
+      peer1:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+organizations:
+  Producer:
+    mspid: %MEMBERID%
+    peers:
+      - peer1
+    certificateAuthorities:
+      - ca-producer
+
+orderers:
+  orderer.com:
+    url: grpcs://%ORDERINGSERVICEENDPOINT%
+    grpcOptions:
+      ssl-target-name-override: %ORDERINGSERVICEENDPOINTNOPORT%
+    tlsCACerts:
+      path: %CAFILE%
+
+peers:
+  peer1:
+    url: grpcs://%PEERSERVICEENDPOINT%
+    eventUrl: grpcs://%PEEREVENTENDPOINT%
+    grpcOptions:
+      ssl-target-name-override: %PEERSERVICEENDPOINTNOPORT%
+    tlsCACerts:
+      path: %CAFILE%
+
+certificateAuthorities:
+  ca-producer:
+    url: https://%CASERVICEENDPOINT%
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: %CAFILE%
+    registrar:
+      - enrollId: %ADMINUSER%
+        enrollSecret: %ADMINPWD%
+    caName: %MEMBERID%

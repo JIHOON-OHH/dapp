@@ -1,0 +1,52 @@
+name: "trace"
+x-type: "hlfv1"
+description: "Shipping Trace"
+version: "1.0"
+
+channels:
+  testchannel:
+    orderers:
+      - orderer.com
+    peers:
+      peer1:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+
+organizations:
+  Producer:
+    mspid: m-5YVMG2WP4FCQHKRUFAF3RYPLME
+    peers:
+      - peer1
+    certificateAuthorities:
+      - ca-producer
+
+orderers:
+  orderer.com:
+    url: grpcs://orderer.n-fvepw74ph5crbcdmg6mq2ud534.managedblockchain.us-east-1.amazonaws.com:30001
+    grpcOptions:
+      ssl-target-name-override: orderer.n-fvepw74ph5crbcdmg6mq2ud534.managedblockchain.us-east-1.amazonaws.com
+    tlsCACerts:
+      path: /home/ec2-user/managedblockchain-tls-chain.pem
+
+peers:
+  peer1:
+    url: grpcs://nd-lji3k7wsc5b5za6k36iy3amjye.m-5yvmg2wp4fcqhkrufaf3ryplme.n-fvepw74ph5crbcdmg6mq2ud534.managedblockchain.us-east-1.amazonaws.com:30003
+    eventUrl: grpcs://nd-lji3k7wsc5b5za6k36iy3amjye.m-5yvmg2wp4fcqhkrufaf3ryplme.n-fvepw74ph5crbcdmg6mq2ud534.managedblockchain.us-east-1.amazonaws.com:30004
+    grpcOptions:
+      ssl-target-name-override: nd-lji3k7wsc5b5za6k36iy3amjye.m-5yvmg2wp4fcqhkrufaf3ryplme.n-fvepw74ph5crbcdmg6mq2ud534.managedblockchain.us-east-1.amazonaws.com
+    tlsCACerts:
+      path: /home/ec2-user/managedblockchain-tls-chain.pem
+
+certificateAuthorities:
+  ca-producer:
+    url: https://ca.m-5yvmg2wp4fcqhkrufaf3ryplme.n-fvepw74ph5crbcdmg6mq2ud534.managedblockchain.us-east-1.amazonaws.com:30002
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: /home/ec2-user/managedblockchain-tls-chain.pem
+    registrar:
+      - enrollId: 
+        enrollSecret: 
+    caName: m-5YVMG2WP4FCQHKRUFAF3RYPLME

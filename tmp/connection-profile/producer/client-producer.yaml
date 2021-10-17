@@ -1,0 +1,10 @@
+name: "trace-producer"
+x-type: "hlfv1"
+description: "trace client definition for Producer"
+version: "1.0"
+client:
+  organization: Producer
+  credentialStore:
+    path: "./fabric-client-certs-producer"
+    cryptoStore:
+      path: "./fabric-client-keys-producer"
